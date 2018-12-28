@@ -4,11 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/linearlayout"
+        android:layout_width="368dp"
+        android:layout_height="551dp"
         android:layout_centerInParent="true"
-        android:text="This is Tab 3"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
+        android:orientation="vertical"></LinearLayout>
 
 </RelativeLayout>

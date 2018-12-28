@@ -15,7 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".New2"></activity>
+        <activity android:name=".New2" />
+        <activity android:name=".simple_image"></activity>
     </application>
 
 </manifest>

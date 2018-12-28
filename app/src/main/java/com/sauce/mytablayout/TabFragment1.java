@@ -27,9 +27,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by Junyoung on 2016-06-23.
- */
 
 public class TabFragment1 extends Fragment {
     //static final String[] LIST_MENU = {"LIST1", "LIST2", "LIST3"} ;

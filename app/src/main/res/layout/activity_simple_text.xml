@@ -10,8 +10,8 @@
         android:id="@+id/name"
         android:layout_width="325dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginTop="296dp"
+        android:layout_marginEnd="40dp"
         android:layout_weight="2"
         android:gravity="center_vertical"
         android:text="New Text"
@@ -24,15 +24,29 @@
         android:id="@+id/phone"
         android:layout_width="323dp"
         android:layout_height="59dp"
-        android:layout_marginBottom="356dp"
+        android:layout_marginBottom="252dp"
         android:layout_weight="1"
         android:text="New Text"
         android:textColor="#666666"
         android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="191dp"
+        android:layout_height="170dp"
+        android:layout_marginBottom="380dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/male1" />
+
 </android.support.constraint.ConstraintLayout>

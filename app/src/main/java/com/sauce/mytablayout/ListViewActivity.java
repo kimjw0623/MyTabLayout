@@ -12,11 +12,14 @@ public class ListViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple_text);
 
+        ImageView imageView = (ImageView)findViewById(R.id.image);
+
         TextView name = (TextView) findViewById(R.id.name) ;
         TextView phone = (TextView) findViewById(R.id.phone) ;
 
         Intent intent = getIntent();
         name.setText(intent.getStringExtra("name"));
         phone.setText(intent.getStringExtra("phone"));
+        imageView.setImageResource(R.drawable.male1);
     }
 }

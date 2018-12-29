@@ -10,11 +10,18 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
-/**
- * Created by Junyoung on 2016-06-23.
- */
 
 public class TabFragment2 extends Fragment {
+    private int[] mThumbIds = {
+            R.drawable.asd, R.drawable.asdf,
+            R.drawable.a1, R.drawable.b1, R.drawable.c1,
+            R.drawable.a4, R.drawable.a5, R.drawable.a6, R.drawable.a7,
+            R.drawable.a8, R.drawable.a7, R.drawable.b1, R.drawable.b1,
+            R.drawable.b1, R.drawable.b1, R.drawable.b1, R.drawable.b1,
+            R.drawable.c1,
+            R.drawable.a4, R.drawable.a5, R.drawable.a6, R.drawable.a7,
+            R.drawable.a8, R.drawable.a7, R.drawable.b1
+    };
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //super.onCreate(savedInstanceState);
@@ -23,9 +30,9 @@ public class TabFragment2 extends Fragment {
         //Intent intent1 = new Intent(getActivity(),New2.class);
         //startActivity(intent1);
         GridView gridView = (GridView) view.findViewById(R.id.grid_view);
-
+        ImageAdapter imageAdapter = new ImageAdapter(getActivity(),mThumbIds);
         // Instance of ImageAdapter Class
-        gridView.setAdapter(new ImageAdapter(getActivity()));
+        gridView.setAdapter(imageAdapter);
         return view;
     }
 }

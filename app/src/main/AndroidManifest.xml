@@ -15,8 +15,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".New2" />
-        <activity android:name=".simple_image"></activity>
+        <activity
+            android:name=".ImageActivity"
+            android:label="Selected Image">
+        </activity>
+
     </application>
 
 </manifest>

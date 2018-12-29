@@ -34,7 +34,7 @@ public class TabFragment1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //return inflater.inflate(R.layout.tab_fragment_1, container, false);
         final View view = inflater.inflate(R.layout.tab_fragment_1, container, false);
-        ListViewAdapter adapter = new ListViewAdapter();
+        ListViewAdapter adapter = new ListViewAdapter(view.getContext());
                 //ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_MENU) ;
 
         ListView listview = (ListView) view.findViewById(R.id.listview1) ;
@@ -51,7 +51,35 @@ public class TabFragment1 extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView parent, View v, int position, long id) {
+                // get item
+                ListViewItem item = (ListViewItem) parent.getItemAtPosition(position) ;
+
+                String titleStr = item.getTitle() ;
+                String descStr = item.getDesc() ;
+
+                Intent intent = new Intent(getActivity(), ListViewActivity.class);
+                intent.putExtra("name", titleStr);
+                intent.putExtra("phone", descStr);
+                startActivity(intent);
+            }
+        }) ;
+
         return view;
+    }
+    public void onItemClick(AdapterView parent, View v, int position, long id) {
+        // get item
+        ListViewItem item = (ListViewItem) parent.getItemAtPosition(position) ;
+
+        String titleStr = item.getTitle() ;
+        String descStr = item.getDesc() ;
+
+        Intent intent = new Intent(getActivity(), ListViewActivity.class);
+        intent.putExtra("name", titleStr);
+        intent.putExtra("phone", descStr);
+        startActivity(intent);
     }
     public String loadJSONFromAsset() {
         String json = null;

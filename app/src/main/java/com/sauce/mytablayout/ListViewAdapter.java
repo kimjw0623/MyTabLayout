@@ -13,10 +13,10 @@ import java.util.ArrayList;
 public class ListViewAdapter extends BaseAdapter{
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
-
+    private Context mContext=null;
     // ListViewAdapter의 생성자
-    public ListViewAdapter() {
-
+    public ListViewAdapter(Context c) {
+        this.mContext = c;
     }
     @Override
     public int getCount() {
@@ -46,6 +46,8 @@ public class ListViewAdapter extends BaseAdapter{
         //iconImageView.setImageDrawable(listViewItem.getIcon());
         titleTextView.setText(listViewItem.getTitle());
         descTextView.setText(listViewItem.getDesc());
+
+
 
         return convertView;
     }

@@ -17,9 +17,9 @@
         </activity>
         <activity
             android:name=".ImageActivity"
-            android:label="Selected Image">
-        </activity>
-
+            android:label="Selected Image"></activity>
+        <activity android:name=".simple_text"></activity>
+        <activity android:name=".ListViewActivity"></activity>
     </application>
 
 </manifest>

@@ -8,9 +8,6 @@ import android.widget.ImageView;
 
 
 public class ImageActivity extends Activity {
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

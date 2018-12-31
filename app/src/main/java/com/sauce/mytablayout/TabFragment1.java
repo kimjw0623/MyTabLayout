@@ -5,12 +5,16 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,40 +30,30 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import android.database.Cursor;
 
 
 public class TabFragment1 extends Fragment {
-    //static final String[] LIST_MENU = {"LIST1", "LIST2", "LIST3"} ;
 
+    //static final String[] LIST_MENU = {"LIST1", "LIST2", "LIST3"} ;
+    ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>() ;
     String [] arrProjection = {
             ContactsContract.Contacts._ID,
             ContactsContract.Contacts.DISPLAY_NAME
     };
+    String name = null;
+    String num= null;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //return inflater.inflate(R.layout.tab_fragment_1, container, false);
         final View view = inflater.inflate(R.layout.tab_fragment_1, container, false);
-        ListViewAdapter adapter = new ListViewAdapter(view.getContext());
+        final ListViewAdapter adapter = new ListViewAdapter(view.getContext(),itemList);
                 //ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_MENU) ;
-        ListView listview = (ListView) view.findViewById(R.id.listview1) ;
-        listview.setAdapter(adapter) ;
-/*
-        Cursor clsCursor = getActivity().getContentResolver().query(
-                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                arrProjection,
-                ContactsContract.Contacts.HAS_PHONE_NUMBER + "=1",
-                null,null
-        );
-
-        while (clsCursor.moveToNext()) {
-                String name = clsCursor.getString(clsCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-                String phone = clsCursor.getString(clsCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                adapter.addItem(name,phone);
-        }
-        clsCursor.close();
-*/
+        final ListView listview = (ListView) view.findViewById(R.id.listview1) ;
+        final ArrayList<String> items = new ArrayList<String>() ;
 
         try {
             JSONArray obj = new JSONArray(loadJSONFromAsset());
@@ -68,13 +62,113 @@ public class TabFragment1 extends Fragment {
                 JSONObject jo_inside = obj.getJSONObject(i);
                 String name_value = jo_inside.getString("name");
                 String phone_value = jo_inside.getString("phone");
-                adapter.addItem(name_value, phone_value) ;
+                adapter.addItem(name_value, phone_value);
+                items.add(Integer.toString(i));
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        EditText editTextFilter = (EditText) view.findViewById(R.id.editTextFilter) ;
+        editTextFilter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable edit) {
+                String filterText = edit.toString() ;
+                if(filterText.length()==0)
+                    listview.clearTextFilter() ;
+                ((ListViewAdapter)listview.getAdapter()).getFilter().filter(filterText) ;
+            }
 
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        }) ;
+
+        Button buttonNoAsc = (Button) view.findViewById(R.id.namedesc) ;
+        buttonNoAsc.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*
+                Intent intent = new Intent(getContext(), ListViewAdd.class);
+                startActivityForResult(intent,0);
+                adapter.addItem(name,num);
+                adapter.notifyDataSetChanged() ;*/
+                Comparator<ListViewItem> noAsc = new Comparator<ListViewItem>() {
+                    @Override
+                    public int compare(ListViewItem item1, ListViewItem item2) {
+                        //return (Integer.parseInt(item1.getTitle()) - Integer.parseInt(item2.getTitle())) ;
+                        return item2.getTitle().compareTo(item1.getTitle()) ;
+                    }
+                } ;
+                Collections.sort(itemList, noAsc) ;
+                adapter.notifyDataSetChanged() ;
+            }
+        });
+
+        Button addButton = (Button)view.findViewById(R.id.nameasc) ;
+        addButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                /*
+                int count;
+                count = adapter.getCount();
+
+                // 아이템 추가.
+                items.add("LIST" + Integer.toString(count + 1));
+                adapter.addItem("tom", "01012345678") ;
+
+                // listview 갱신
+                adapter.notifyDataSetChanged();*////두번째 액티비티에서 데이터 전달하도록
+                /*
+                Intent intent = new Intent(getActivity(), ListViewAdd.class);
+                startActivityForResult(intent,0);
+                adapter.addItem(name,num);
+                adapter.notifyDataSetChanged() ;*/
+                Comparator<ListViewItem> noAsc = new Comparator<ListViewItem>() {
+                    @Override
+                    public int compare(ListViewItem item1, ListViewItem item2) {
+                        //return (Integer.parseInt(item1.getTitle()) - Integer.parseInt(item2.getTitle())) ;
+                        return item1.getTitle().compareTo(item2.getTitle()) ;
+                    }
+                } ;
+                Collections.sort(itemList, noAsc) ;
+                adapter.notifyDataSetChanged() ;
+            }
+        }) ;
+
+
+        Button deleteButton = (Button)view.findViewById(R.id.numasc) ;
+        deleteButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Comparator<ListViewItem> noAsc = new Comparator<ListViewItem>() {
+                    @Override
+                    public int compare(ListViewItem item1, ListViewItem item2) {
+                        //return (Integer.parseInt(item1.getTitle()) - Integer.parseInt(item2.getTitle())) ;
+                        return item1.getDesc().compareTo(item2.getDesc()) ;
+                    }
+                } ;
+                Collections.sort(itemList, noAsc) ;
+                adapter.notifyDataSetChanged() ;
+            }
+        });
+        Button numdesc = (Button)view.findViewById(R.id.numdesc) ;
+        numdesc.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Comparator<ListViewItem> noAsc = new Comparator<ListViewItem>() {
+                    @Override
+                    public int compare(ListViewItem item1, ListViewItem item2) {
+                        //return (Integer.parseInt(item1.getTitle()) - Integer.parseInt(item2.getTitle())) ;
+                        return item2.getDesc().compareTo(item1.getDesc()) ;
+                    }
+                } ;
+                Collections.sort(itemList, noAsc) ;
+                adapter.notifyDataSetChanged() ;
+            }
+        });
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
@@ -90,6 +184,8 @@ public class TabFragment1 extends Fragment {
                 startActivity(intent);
             }
         }) ;
+        listview.setAdapter(adapter) ;
+        adapter.notifyDataSetChanged();
 
         return view;
     }
@@ -108,6 +204,16 @@ public class TabFragment1 extends Fragment {
             return null;
         }
         return json;
-
+    }
+    @Override
+    public void onActivityResult(int requestCode,int resultCode,Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode){
+            case 0:
+                //itemList.addItem(data.getStringExtra("name"),data.getStringExtra("num"));
+                name = data.getStringExtra("name");
+                num = data.getStringExtra("num");
+                break;
+        }
     }
 }

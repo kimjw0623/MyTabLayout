@@ -4,34 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".simple_text">
 
     <TextView
         android:id="@+id/name"
         android:layout_width="325dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="296dp"
-        android:layout_marginEnd="40dp"
+        android:layout_height="53dp"
         android:layout_weight="2"
         android:gravity="center_vertical"
         android:text="New Text"
         android:textColor="#000000"
         android:textSize="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.523"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteX="46dp" />
 
     <TextView
         android:id="@+id/phone"
         android:layout_width="323dp"
         android:layout_height="59dp"
-        android:layout_marginBottom="252dp"
+        android:layout_marginBottom="200dp"
         android:layout_weight="1"
         android:text="New Text"
         android:textColor="#666666"
         android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

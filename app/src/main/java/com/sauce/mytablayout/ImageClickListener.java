@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-
-
 public class ImageClickListener implements OnClickListener {
 
     Context context;

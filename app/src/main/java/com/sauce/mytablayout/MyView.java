@@ -5,15 +5,22 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.os.Environment;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyView extends View {
     private List<Path> lines = new ArrayList<Path>();
-    private List<String> colors = new ArrayList<String>();
+    private List<Paint> colors = new ArrayList<Paint>();
     private Path path;
     private Paint paint;
 
@@ -25,25 +32,20 @@ public class MyView extends View {
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(10f);
+        colors.add(paint);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        for(Path p : lines){
-            canvas.drawPath(p, paint);
+        for(int i=0; i<lines.size(); i++){
+            canvas.drawPath(lines.get(i), colors.get(i));
         }
     }
 
     public void changeColor(String color){
-        paint = new Paint();
         paint.setColor(Color.parseColor(color));
-        paint.setStyle(Paint.Style.STROKE);
-        Path tp = new Path();
-        path.addPath(tp);
-        lines.add(path);
-
         if(color.equals("#ffffff")){
-            paint.setStrokeWidth(20f);
+            paint.setStrokeWidth(130f);
         }
         else paint.setStrokeWidth(10f);
 
@@ -51,8 +53,14 @@ public class MyView extends View {
 
     public void cleanPath(){
         lines.clear();
+        colors.clear();
         path = new Path();
         lines.add(path);
+        paint = new Paint();
+        paint.setColor(Color.BLACK);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(10f);
+        colors.add(paint);
         invalidate();
     }
 
@@ -67,37 +75,21 @@ public class MyView extends View {
         else if(event.getAction() == MotionEvent.ACTION_MOVE){
             path.lineTo(x, y);
         }
-        else if(event.getAction() == MotionEvent.ACTION_UP){ }
+        else if(event.getAction() == MotionEvent.ACTION_UP){
+            path = new Path();
+            lines.add(path);
+            int color = paint.getColor();
+            paint = new Paint();
+            paint.setColor(color);
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(10f);
+            colors.add(paint);
+        }
 
 
         invalidate();
         return true;
     }
-}
 
-/*class Point {
-    private float x, y, r;
-    private Paint paint;
-    Point(float x, float y){
-        this.x = x;
-        this.y = y;
-    }
-    public float getX(){
-        return x;
-    }
-    public float getY(){
-        return y;
-    }
-    public void setPaint(Paint paint){
-        this.paint = paint;
-    }
-    public Paint getPaint(){
-        return paint;
-    }
-    public void setR(float r){
-        this.r = r;
-    }
-    public float getR(){
-        return r;
-    }
-}*/
+    //public void saveDrawing(LinearLayout ll){ }
+}

@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("Contact"));
         tabLayout.addTab(tabLayout.newTab().setText("Images"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab Three"));
+        tabLayout.addTab(tabLayout.newTab().setText("Canvas"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         // Initializing ViewPager

@@ -51,7 +51,7 @@ public class TabFragment1 extends Fragment {
         //return inflater.inflate(R.layout.tab_fragment_1, container, false);
         final View view = inflater.inflate(R.layout.tab_fragment_1, container, false);
         final ListViewAdapter adapter = new ListViewAdapter(view.getContext(),itemList);
-                //ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_MENU) ;
+        //ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_MENU) ;
         final ListView listview = (ListView) view.findViewById(R.id.listview1) ;
         final ArrayList<String> items = new ArrayList<String>() ;
 

@@ -1,0 +1,37 @@
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#ffffff"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/gv_folder"
+        android:numColumns="2"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"></GridView>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab1"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            app:fabSize="normal"
+            android:backgroundTint="@color/colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/camera"/>
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

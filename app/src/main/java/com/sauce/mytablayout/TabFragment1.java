@@ -35,9 +35,21 @@ import java.util.Comparator;
 import java.util.HashMap;
 import android.database.Cursor;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 
 public class TabFragment1 extends Fragment {
-
+    private RequestQueue queue;
+    private static final String TAG = "MAIN";
     //static final String[] LIST_MENU = {"LIST1", "LIST2", "LIST3"} ;
     ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>() ;
     String [] arrProjection = {
@@ -54,7 +66,7 @@ public class TabFragment1 extends Fragment {
         //ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_MENU) ;
         final ListView listview = (ListView) view.findViewById(R.id.listview1) ;
         final ArrayList<String> items = new ArrayList<String>() ;
-
+/*
         try {
             JSONArray obj = new JSONArray(loadJSONFromAsset());
 
@@ -68,6 +80,39 @@ public class TabFragment1 extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+*/
+
+        queue = Volley.newRequestQueue(getContext());
+        String url = "http://socrip4.kaist.ac.kr:580/contact/";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray obj = new JSONArray(response);
+                    for (int i = 0; i < obj.length(); i++) {
+                        JSONObject jo_inside = obj.getJSONObject(i);
+                        String name_value = jo_inside.getString("name");
+                        String phone_value = jo_inside.getString("phone");
+                        adapter.addItem(name_value, phone_value);
+                        items.add(Integer.toString(i));
+                    }
+                } catch (JSONException e) {
+                e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        stringRequest.setTag(TAG);
+        queue.add(stringRequest);
+
+
+
+
 
         EditText editTextFilter = (EditText) view.findViewById(R.id.editTextFilter) ;
         editTextFilter.addTextChangedListener(new TextWatcher() {
@@ -214,6 +259,13 @@ public class TabFragment1 extends Fragment {
                 name = data.getStringExtra("name");
                 num = data.getStringExtra("num");
                 break;
+        }
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (queue != null) {
+            queue.cancelAll(TAG);
         }
     }
 }

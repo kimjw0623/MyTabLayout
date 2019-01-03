@@ -1,10 +1,13 @@
 package com.sauce.mytablayout;
 import android.Manifest;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -56,7 +59,28 @@ public class ShowImage extends AppCompatActivity {
             Log.e("Else","Else");
             fn_imagespath();
         }
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab1);
+        fab.setOnClickListener(new View.OnClickListener() {
+                                   @Override
+                                   public void onClick(View view) {
+                                       Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                                       try {
+                                           PackageManager pm = getPackageManager();
 
+                                           final ResolveInfo mInfo = pm.resolveActivity(i, 0);
+
+                                           Intent intent = new Intent();
+                                           intent.setComponent(new ComponentName(mInfo.activityInfo.packageName, mInfo.activityInfo.name));
+                                           intent.setAction(Intent.ACTION_MAIN);
+                                           intent.addCategory(Intent.CATEGORY_LAUNCHER);
+
+                                           startActivity(intent);
+                                       } catch (Exception e) {
+                                           Log.i("TAG", "Unable to launch camera: " + e);
+                                       }
+                                   }
+                               }
+        );
 
 
     }
